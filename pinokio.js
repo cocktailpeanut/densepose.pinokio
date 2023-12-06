@@ -1,3 +1,4 @@
+const os = require('os')
 module.exports = {
   title: "Vid2DensePose",
   icon: "icon.png",
@@ -17,7 +18,11 @@ module.exports = {
         ]
       }
     } else {
-      return [{ icon: "fa-solid fa-plug", text: "Install", href: "install.json", params: { run: true, fullscreen: true } }]
+      if (os.platform() === 'win32') {
+        return [{ icon: "fa-solid fa-plug", text: "Install", href: "install_win.json", params: { run: true, fullscreen: true } }]
+      } else {
+        return [{ icon: "fa-solid fa-plug", text: "Install", href: "install.json", params: { run: true, fullscreen: true } }]
+      }
     }
   }
 }
