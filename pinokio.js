@@ -1,7 +1,7 @@
 module.exports = {
   title: "Vid2DensePose",
   icon: "icon.png",
-  description: "Convert your videos to densepose and use it on MagicAnimate",
+  description: "Convert your videos to densepose and use it on MagicAnimate https://github.com/Flode-Labs/vid2densepose",
   menu: async (kernel) => {
     let installed = await kernel.exists(__dirname, "app", "env")
     if (installed) {
