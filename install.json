@@ -1,0 +1,40 @@
+{
+  "cmds": {
+    "nvidia": "pip install torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu118",
+    "amd": "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6",
+    "default": "pip install torch torchvision torchaudio"
+  },
+  "requires": [{
+    "type": "conda",
+    "name": "ffmpeg",
+    "args": "-c conda-forge"
+  }],
+  "run": [{
+    "method": "shell.run",
+    "params": { "message": "git clone https://github.com/cocktailpeanut/vid2densepose app" }
+  }, {
+    "method": "shell.run",
+    "params": {
+      "message": "mkdir C:\\TMP"
+    }
+  }, {
+    "method": "shell.run",
+    "params": {
+      "venv": "env",
+      "path": "app",
+      "env": { "TMPDIR": "C:\\TMP" },
+      "message": [
+        "{{(gpu === 'nvidia' ? self.cmds.nvidia : (gpu === 'amd' ? self.cmds.amd : self.cmds.default))}}",
+        "pip install -r ../requirements.txt",
+        "git clone https://github.com/facebookresearch/detectron2.git",
+        "pip install -e detectron2/projects/DensePose"
+      ]
+    }
+  }, {
+    "method": "input",
+    "params": { "title": "Install Success", "description": "Go back to the dashboard and launch the app!" }
+  }, {
+    "method": "browser.open",
+    "params": { "uri": "/?selected=Densepose" }
+  }]
+}
